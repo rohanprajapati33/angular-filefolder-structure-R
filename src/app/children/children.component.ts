@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Entities } from '../model/folder';
 
 @Component({
   selector: 'app-children',
@@ -11,6 +12,7 @@ export class ChildrenComponent {
   fileFolderForm!: FormGroup;
   isShowIconFile!: boolean;
   isShowIconFolder!: boolean;
+  entities!: Entities;
 
   constructor(private formbuilder: FormBuilder) {}
 
@@ -23,7 +25,6 @@ export class ChildrenComponent {
   // }
 
   ngOnInit() {
-    console.log(this.folderItem);
     this.fileFolderForm = this.formbuilder.group({
       children: this.formbuilder.array([]),
     });
@@ -72,11 +73,13 @@ export class ChildrenComponent {
     this.isShowIconFile = false;
     this.children.controls[index]?.get('isViewFolder')?.setValue(false);
     folder.controls.children.push(this.folderInput());
+    console.log(this.isShowIconFile);
   }
 
   addChildrenFolder(index: number, folder: any) {
     this.isShowIconFolder = false;
     this.children.controls[index]?.get('isViewFolder')?.setValue(false);
     folder.controls.children.push(this.folderInput());
+    console.log(this.isShowIconFolder);
   }
 }

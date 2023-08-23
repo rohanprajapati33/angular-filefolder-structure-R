@@ -7,7 +7,7 @@
     >
       <div class="folderInput">
         <img
-          *ngIf="isShowIconFile && !isShowIconFolder"
+          *ngIf="!isShowIconFolder"
           src="https://folder-structure-9dbd4.web.app/assets/folder-open-regular.svg"
           alt="folder-icon"
           class="folder-icon"
@@ -57,7 +57,13 @@
         >
 
         <div *ngIf="folder.get('isHidden')?.value">
-          <button (click)="addFileFolder(index)" class="plus">+</button>
+          <button
+            *ngIf="isShowIconFile"
+            (click)="addFileFolder(index)"
+            class="plus"
+          >
+            +
+          </button>
           <button (click)="deleteFolder(index)" class="minus">-</button>
         </div>
       </div>

@@ -1,7 +1,7 @@
 <button class="add-folder" (click)="addFolderRoot()">Add folder to root</button>
 
 <div>
-  <form [formGroup]="fileFolderForm">
+  <form>
     <ul formArrayName="fileFolderFormArray" class="folderList">
       <li
         *ngFor="let folder of fileFolderFormArray.controls"

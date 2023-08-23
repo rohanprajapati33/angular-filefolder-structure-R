@@ -1,6 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ChildrenComponent } from '../children/children.component';
 
 @Component({
   selector: 'app-folder',
@@ -74,8 +73,6 @@ export class FolderComponent {
   }
 
   addChildren(index: number, folder: any) {
-    folder.controls.isEditable.setValue(false);
-
     this.fileFolderFormArray.controls[index]
       ?.get('isViewFolder')
       ?.setValue(false);
