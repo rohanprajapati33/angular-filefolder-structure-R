@@ -1,0 +1,96 @@
+.addFolder {
+  background-color: #000;
+  color: #fff;
+  padding: 10px;
+  margin: 10px 0px 20px 10px;
+  border-radius: 4px;
+}
+
+.folder-icon {
+  height: 25px;
+  margin-right: 10px;
+  width: 15px;
+}
+
+.saveBtn {
+  margin: 0 10px;
+  background-color: #000;
+  color: #fff;
+  border-radius: 4px;
+}
+
+.cancelBtn {
+  background-color: #fff;
+  border: 1px solid #000000;
+  border-radius: 4px;
+  font-weight: 800;
+}
+
+.folderInput {
+  // border: 1px solid #000000;
+  padding: 10px;
+  width: 320px;
+  margin: 20px 0 20px 25px;
+  display: flex;
+  flex-flow: wrap;
+}
+
+.plus {
+  background-color: #000;
+  color: #fff;
+  font-size: 20px;
+  line-height: 20px;
+  text-align: center;
+  margin-left: 10px;
+  border-radius: 20px;
+  font-weight: 700;
+}
+
+.minus {
+  background-color: white;
+  color: black;
+  font-size: 20px;
+  line-height: 20px;
+  text-align: center;
+  margin-left: 10px;
+  border-radius: 20px;
+  font-weight: 700;
+}
+
+.tree-lines::before {
+  background-color: #000;
+  content: "";
+  height: 34px;
+  left: -21px;
+  position: absolute;
+  width: 2px;
+  top: -16px;
+}
+
+.tree-lines {
+  z-index: 100;
+  position: relative;
+}
+
+.tree-lines::after {
+  border-bottom: 2px solid #000000;
+  top: 11px;
+  content: "";
+  left: -20px;
+  position: absolute;
+  width: 15px;
+}
+
+.folderList {
+  list-style-type: none;
+}
+
+.validation {
+  padding-left: 24px;
+  font-size: smaller;
+  color: red;
+}
+
+// (<FormArray>this.fileFolderForm.get('fileFolderFormArray')).controls[
+//   index
+// ].get('children')?.value;

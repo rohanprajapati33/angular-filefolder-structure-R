@@ -1,0 +1,65 @@
+<button class="addFolder" (click)="addFolder()">Add folder to root</button>
+<form [formGroup]="fileFolderForm">
+  <div formArrayName="fileFolderFormArray">
+    <div
+      *ngFor="let folder of fileFolderFormArray.controls; let index = index"
+      [formGroupName]="index"
+    >
+      <div class="folderInput">
+        <img
+          src="https://folder-structure-9dbd4.web.app/assets/folder-open-regular.svg"
+          alt="folder-icon"
+          class="folder-icon"
+          (mouseleave)="onMouseLeave(index)"
+        />
+
+        <input
+          type="text"
+          *ngIf="!folder.get('isEditableText')?.value"
+          formControlName="name"
+        />
+
+        <span
+          *ngIf="folder.get('isEditableText')?.value"
+          (mouseenter)="onMouseEnter(index)"
+          >{{ folder.get("name")?.value }}</span
+        >
+
+        <button
+          *ngIf="!folder.get('isEditableText')?.value"
+          class="saveBtn"
+          (click)="save(folder)"
+        >
+          ✔
+        </button>
+
+        <button
+          *ngIf="!folder.get('isEditableText')?.value"
+          class="cancelBtn"
+          (click)="cancel(index)"
+        >
+          ✕</button
+        ><br />
+
+        <span
+          class="validation"
+          *ngIf="folder.get('name')?.invalid && folder.get('name')?.touched"
+          >Folder Name is required</span
+        >
+
+        <div *ngIf="folder.get('isHidden')?.value">
+          <button (click)="addFileFolder(index)" class="plus">+</button>
+          <button (click)="deleteFolder(index)" class="minus">-</button>
+        </div>
+      </div>
+
+      <div class="fileFolder" *ngIf="folder.get('isViewFolder')?.value">
+        <button (click)="addChildren(index, folder)">File</button>
+        <button (click)="addChildren(index, folder)">Folder</button>
+      </div>
+      <app-children [folderItem]="folder"></app-children>
+    </div>
+  </div>
+</form>
+
+<pre>{{ fileFolderForm.value | json }}</pre>

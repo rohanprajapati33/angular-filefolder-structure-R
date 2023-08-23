@@ -1,0 +1,91 @@
+<button class="add-folder" (click)="addFolderRoot()">Add folder to root</button>
+
+<div>
+  <form [formGroup]="fileFolderForm">
+    <ul formArrayName="fileFolderFormArray" class="folderList">
+      <li
+        *ngFor="let folder of fileFolderFormArray.controls"
+        class="tree-lines"
+      >
+        <div
+          class="w-50 mt-2 d-flex show-icon"
+          *ngIf="isAddFolder"
+          class="folderInput"
+        >
+          <img
+            src="https://folder-structure-9dbd4.web.app/assets/folder-open-regular.svg"
+            alt="folder-icon"
+            class="folder-icon"
+          />
+          <input
+            name="folderName"
+            formControlName="name"
+            [(ngModel)]="folderName"
+            type="text"
+          />
+
+          <button (click)="saveFolderName(entities.FOLDER)" class="saveBtn">
+            ✔
+          </button>
+          <button (click)="deleteFolder()" class="cancelBtn">✕</button><br />
+        </div>
+
+        <div class="show-icon d-flex">
+          <img
+            *ngIf="folder.get('type')?.value === entities.FOLDER"
+            src="https://folder-structure-9dbd4.web.app/assets/folder-open-regular.svg"
+            alt="folder-icon"
+            class="folder-icon"
+          />
+
+          <span class="pl-1">{{ fileFolderForm.get("name")?.value }}</span>
+          <button
+            *ngIf="folder.get('type')?.value === entities.FOLDER"
+            (click)="showFileFolderBtn(folder)"
+            class="plus hide-icon"
+          >
+            +
+          </button>
+          <button (click)="deleteItem(folder)" class="minus hide-icon">
+            -
+          </button>
+        </div>
+
+        <div *ngIf="folder.get('isShowButton')?.value" class="tree-lines">
+          <input
+            type="button"
+            [value]="entities.FILE"
+            (click)="addChildren(folder, $event)"
+          />
+          <input
+            type="button"
+            [value]="entities.FOLDER"
+            (click)="addChildren(folder, $event)"
+          />
+        </div>
+
+        <div
+          *ngIf="folder.get('isShowIcon')?.value"
+          class="folderInput tree-lines"
+        >
+          <img
+            *ngIf="folder.get('type')?.value === entities.FOLDER"
+            src="https://folder-structure-9dbd4.web.app/assets/folder-open-regular.svg"
+            alt="folder-icon"
+            class="folder-icon"
+          />
+
+          <input
+            name="childFolderName"
+            [(ngModel)]="childFolderName"
+            type="text"
+          />
+          <!-- <button (click)="saveChildrenArray(folder)" class="saveBtn">✔</button>
+          <button (click)="removeChildrenArray(folder)" class="cancelBtn">
+            X
+          </button> -->
+        </div>
+      </li>
+    </ul>
+  </form>
+</div>

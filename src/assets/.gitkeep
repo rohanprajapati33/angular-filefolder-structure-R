@@ -1,0 +1,46 @@
+// ngOnInit() {
+//   this._createForm();
+// }
+
+// get fileFolderFormArray() {
+//   return this.fileFolderForm.get('children') as FormArray;
+// }
+
+// _createForm() {
+//   this.fileFolderForm = this.formbuilder.group({
+//     name: [''],
+//     children: this.formbuilder.array([]),
+//   });
+// }
+
+// addFolder() {
+//   this.fileFolderFormArray.push(
+//     this.formbuilder.control({
+//       children: [],
+//     })
+//   );
+// }
+
+// <!-- <button class="addFolder" (click)="addFolder()">Add folder to root</button>
+
+// <form [formGroup]="fileFolderForm">
+//   <div formArrayName="fileFolderFormArray">
+//     <div
+//       *ngFor="let folder of fileFolderFormArray.controls; let index = index"
+//       [formGroupName]="index"
+//     >
+//       <div class="folderInput">
+//         <img
+//           src="https://folder-structure-9dbd4.web.app/assets/folder-open-regular.svg"
+//           alt="folder-icon"
+//           class="folder-icon"
+//           (mouseleave)="onMouseLeave(index)"
+//         />
+
+//         <input
+//           type="text"
+//           *ngIf="!folder.get('isEditableText')?.value"
+//           formControlName="name"
+//         />
+//       </div>
+//     </div> -->
