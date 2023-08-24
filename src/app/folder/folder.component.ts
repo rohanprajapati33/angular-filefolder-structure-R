@@ -1,5 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Entities, FolderType } from '../model/folder';
 
 @Component({
   selector: 'app-folder',
@@ -14,10 +15,6 @@ export class FolderComponent {
   get fileFolderFormArray() {
     return this.fileFolderForm.get('fileFolderFormArray') as FormArray;
   }
-
-  // get children() {
-  //   return this.fileFolderFormArray.controls['children'] as FormArray;
-  // }
 
   ngOnInit() {
     this.fileFolderForm = this.formbuilder.group({
@@ -35,19 +32,19 @@ export class FolderComponent {
   folderInput() {
     return this.formbuilder.group({
       name: ['', Validators.required],
+      type: [''],
       isEditableText: [false],
-      isEditable: [false],
       isHidden: [false],
       isViewFolder: [false],
       children: this.formbuilder.array([]),
     });
   }
 
-  save(index: any) {
+  save(folder: any) {
     if (this.fileFolderForm.invalid) {
       return;
     }
-    index.get('isEditableText').setValue(true);
+    folder.get('isEditableText').setValue(true);
   }
 
   cancel(index: number) {
@@ -72,11 +69,37 @@ export class FolderComponent {
     this.fileFolderFormArray.removeAt(index);
   }
 
-  addChildren(index: number, folder: any) {
+  addChildrenFile(index: number, folder: any) {
     this.fileFolderFormArray.controls[index]
       ?.get('isViewFolder')
       ?.setValue(false);
 
-    folder.controls.children.push(this.folderInput());
+    folder.controls.children.push(
+      this.formbuilder.group({
+        name: ['', Validators.required],
+        type: ['file'],
+        isEditableText: [false],
+        isHidden: [false],
+        isViewFolder: [false],
+        children: this.formbuilder.array([]),
+      })
+    );
+  }
+
+  addChildrenFolder(index: number, folder: any) {
+    this.fileFolderFormArray.controls[index]
+      ?.get('isViewFolder')
+      ?.setValue(false);
+
+    folder.controls.children.push(
+      this.formbuilder.group({
+        name: ['', Validators.required],
+        type: ['folder'],
+        isEditableText: [false],
+        isHidden: [false],
+        isViewFolder: [false],
+        children: this.formbuilder.array([]),
+      })
+    );
   }
 }

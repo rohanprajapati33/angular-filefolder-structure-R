@@ -10,19 +10,11 @@ import { Entities } from '../model/folder';
 export class ChildrenComponent {
   @Input() folderItem!: any;
   fileFolderForm!: FormGroup;
-  isShowIconFile!: boolean;
-  isShowIconFolder!: boolean;
-  entities!: Entities;
-
   constructor(private formbuilder: FormBuilder) {}
 
   get children() {
     return this.folderItem.get('children') as FormArray;
   }
-
-  // get fileFolderFormArray() {
-  //   return this.fileFolderForm.get('fileFolderFormArray') as FormArray;
-  // }
 
   ngOnInit() {
     this.fileFolderForm = this.formbuilder.group({
@@ -33,7 +25,7 @@ export class ChildrenComponent {
   folderInput() {
     return this.formbuilder.group({
       name: ['', Validators.required],
-      isEditable: [false],
+      type: [''],
       isEditableText: [false],
       isHidden: [false],
       isViewFolder: [false],
@@ -70,16 +62,30 @@ export class ChildrenComponent {
   }
 
   addChildrenFile(index: number, folder: any) {
-    this.isShowIconFile = false;
     this.children.controls[index]?.get('isViewFolder')?.setValue(false);
-    folder.controls.children.push(this.folderInput());
-    console.log(this.isShowIconFile);
+    folder.controls.children.push(
+      this.formbuilder.group({
+        name: ['', Validators.required],
+        type: ['file'],
+        isEditableText: [false],
+        isHidden: [false],
+        isViewFolder: [false],
+        children: this.formbuilder.array([]),
+      })
+    );
   }
 
   addChildrenFolder(index: number, folder: any) {
-    this.isShowIconFolder = false;
     this.children.controls[index]?.get('isViewFolder')?.setValue(false);
-    folder.controls.children.push(this.folderInput());
-    console.log(this.isShowIconFolder);
+    folder.controls.children.push(
+      this.formbuilder.group({
+        name: ['', Validators.required],
+        type: ['folder'],
+        isEditableText: [false],
+        isHidden: [false],
+        isViewFolder: [false],
+        children: this.formbuilder.array([]),
+      })
+    );
   }
 }

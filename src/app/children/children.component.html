@@ -5,9 +5,9 @@
       [formGroupName]="index"
       class="tree-lines"
     >
-      <div class="folderInput">
+      <div class="folder-input">
         <img
-          *ngIf="!isShowIconFolder"
+          *ngIf="folder.get('type')?.value === 'folder'"
           src="https://folder-structure-9dbd4.web.app/assets/folder-open-regular.svg"
           alt="folder-icon"
           class="folder-icon"
@@ -15,7 +15,7 @@
         />
 
         <img
-          *ngIf="!isShowIconFile"
+          *ngIf="folder.get('type')?.value === 'file'"
           src="https://folder-structure-9dbd4.web.app/assets/file-regular.svg"
           alt="folder-icon"
           class="folder-icon"
@@ -36,7 +36,7 @@
 
         <button
           *ngIf="!folder.get('isEditableText')?.value"
-          class="saveBtn"
+          class="save-btn"
           (click)="save(folder)"
         >
           ✔
@@ -44,7 +44,7 @@
 
         <button
           *ngIf="!folder.get('isEditableText')?.value"
-          class="cancelBtn"
+          class="cancel-btn"
           (click)="cancel(index)"
         >
           ✕</button
@@ -58,7 +58,7 @@
 
         <div *ngIf="folder.get('isHidden')?.value">
           <button
-            *ngIf="isShowIconFile"
+            *ngIf="folder.get('type')?.value === 'folder'"
             (click)="addFileFolder(index)"
             class="plus"
           >
@@ -68,13 +68,15 @@
         </div>
       </div>
 
-      <div
-        class="fileFolder tree-lines"
-        *ngIf="folder.get('isViewFolder')?.value"
-      >
-        <button (click)="addChildrenFile(index, folder)">File</button>
-        <button (click)="addChildrenFolder(index, folder)">Folder</button>
-      </div>
+      <ul>
+        <li class="tree-lines" *ngIf="folder.get('isViewFolder')?.value">
+          <button class="btn" (click)="addChildrenFile(index, folder)">
+            File
+          </button>
+          <button (click)="addChildrenFolder(index, folder)">Folder</button>
+        </li>
+      </ul>
+
       <app-children [folderItem]="folder"></app-children>
     </li>
   </ul>

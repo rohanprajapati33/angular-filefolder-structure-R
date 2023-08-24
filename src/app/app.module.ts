@@ -5,7 +5,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { FolderComponent } from './folder/folder.component';
 import { HeaderComponent } from './header/header.component';
-import { FileFolderComponent } from './file-folder/file-folder.component';
 import { ChildrenComponent } from './children/children.component';
 
 @NgModule({
@@ -13,7 +12,6 @@ import { ChildrenComponent } from './children/children.component';
     AppComponent,
     FolderComponent,
     HeaderComponent,
-    FileFolderComponent,
     ChildrenComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, FormsModule, ReactiveFormsModule],

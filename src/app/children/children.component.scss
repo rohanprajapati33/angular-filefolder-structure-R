@@ -12,22 +12,21 @@
   width: 15px;
 }
 
-.saveBtn {
+.save-btn {
   margin: 0 10px;
   background-color: #000;
   color: #fff;
   border-radius: 4px;
 }
 
-.cancelBtn {
+.cancel-btn {
   background-color: #fff;
   border: 1px solid #000000;
   border-radius: 4px;
   font-weight: 800;
 }
 
-.folderInput {
-  // border: 1px solid #000000;
+.folder-input {
   padding: 10px;
   width: 320px;
   margin: 20px 0 20px 25px;
@@ -70,11 +69,12 @@
 .tree-lines {
   z-index: 100;
   position: relative;
+  list-style-type: none;
 }
 
 .tree-lines::after {
   border-bottom: 2px solid #000000;
-  top: 22px;
+  top: 20px;
   content: "";
   left: 2px;
   position: absolute;
@@ -89,4 +89,8 @@
   padding-left: 24px;
   font-size: smaller;
   color: red;
+}
+
+.btn {
+  margin-left: 29px;
 }

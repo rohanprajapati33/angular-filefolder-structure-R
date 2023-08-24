@@ -1,11 +1,12 @@
-<button class="addFolder" (click)="addFolder()">Add folder to root</button>
+<button class="add-folder" (click)="addFolder()">Add folder to root</button>
 <form [formGroup]="fileFolderForm">
-  <div formArrayName="fileFolderFormArray">
-    <div
+  <ul formArrayName="fileFolderFormArray">
+    <li
       *ngFor="let folder of fileFolderFormArray.controls; let index = index"
       [formGroupName]="index"
+      class="folder-list"
     >
-      <div class="folderInput">
+      <div class="folder-input">
         <img
           src="https://folder-structure-9dbd4.web.app/assets/folder-open-regular.svg"
           alt="folder-icon"
@@ -27,7 +28,7 @@
 
         <button
           *ngIf="!folder.get('isEditableText')?.value"
-          class="saveBtn"
+          class="save-btn"
           (click)="save(folder)"
         >
           ✔
@@ -35,7 +36,7 @@
 
         <button
           *ngIf="!folder.get('isEditableText')?.value"
-          class="cancelBtn"
+          class="cancel-btn"
           (click)="cancel(index)"
         >
           ✕</button
@@ -53,13 +54,16 @@
         </div>
       </div>
 
-      <div class="fileFolder" *ngIf="folder.get('isViewFolder')?.value">
-        <button (click)="addChildren(index, folder)">File</button>
-        <button (click)="addChildren(index, folder)">Folder</button>
+      <div
+        class="fileFolder tree-lines"
+        *ngIf="folder.get('isViewFolder')?.value"
+      >
+        <button (click)="addChildrenFile(index, folder)">File</button>
+        <button (click)="addChildrenFolder(index, folder)">Folder</button>
       </div>
       <app-children [folderItem]="folder"></app-children>
-    </div>
-  </div>
+    </li>
+  </ul>
 </form>
 
 <pre>{{ fileFolderForm.value | json }}</pre>

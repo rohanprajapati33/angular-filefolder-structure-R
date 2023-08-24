@@ -1,9 +1,10 @@
 export interface FolderType {
-  type: string;
   name: string;
+  type: string;
+  isEditableText?: boolean;
+  isHidden?: boolean;
+  isViewFolder?: boolean;
   children: FolderType[];
-  isShowIcon?: boolean;
-  isShowButton?: boolean;
 }
 
 export enum Entities {
