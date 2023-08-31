@@ -1,6 +1,5 @@
 import { Component, Input } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Entities } from '../model/folder';
 
 @Component({
   selector: 'app-children',
@@ -9,31 +8,22 @@ import { Entities } from '../model/folder';
 })
 export class ChildrenComponent {
   @Input() folderItem!: any;
-  fileFolderForm!: FormGroup;
   constructor(private formbuilder: FormBuilder) {}
 
   get children() {
     return this.folderItem.get('children') as FormArray;
   }
 
-  ngOnInit() {
-    this.fileFolderForm = this.formbuilder.group({
-      children: this.formbuilder.array([]),
-    });
-  }
+  ngOnInit(): void {}
 
-  folderInput() {
-    return this.formbuilder.group({
-      name: ['', Validators.required],
-      type: [''],
-      isEditableText: [false],
-      isHidden: [false],
-      isViewFolder: [false],
-      children: this.formbuilder.array([]),
-    });
-  }
-
-  save(folder: any) {
+  /**
+   *This Function is Save input name
+   *
+   * @param {*} folder
+   * @return {*}  {void}
+   * @memberof ChildrenComponent
+   */
+  save(folder: any): void {
     console.log(folder);
     if (this.folderItem.invalid) {
       return;
@@ -41,46 +31,44 @@ export class ChildrenComponent {
     folder.get('isEditableText').setValue(true);
   }
 
-  cancel(index: number) {
+  cancel(index: number): void {
     this.children.removeAt(index);
   }
 
-  onMouseEnter(index: number) {
+  onMouseEnter(index: number): void {
     this.children.controls[index]?.get('isHidden')?.setValue(true);
   }
 
-  onMouseLeave(index: number) {
+  onMouseLeave(index: number): void {
     this.children.controls[index]?.get('isHidden')?.setValue(false);
   }
-
-  addFileFolder(index: number) {
+  /**
+   *This Function is show File_Folder button after click this
+   *
+   * @param {number} index
+   * @memberof ChildrenComponent
+   */
+  addFileFolder(index: number): void {
     this.children.controls[index]?.get('isViewFolder')?.setValue(true);
   }
 
-  deleteFolder(index: number) {
+  deleteFileFolder(index: number): void {
     this.children.removeAt(index);
   }
 
-  addChildrenFile(index: number, folder: any) {
+  /**
+   *This Function is add children file and folder
+   *
+   * @param {number} index
+   * @param {*} folder
+   * @memberof ChildrenComponent
+   */
+  addChildrenFileFolder(index: number, folder: any, type: string): void {
     this.children.controls[index]?.get('isViewFolder')?.setValue(false);
     folder.controls.children.push(
       this.formbuilder.group({
         name: ['', Validators.required],
-        type: ['file'],
-        isEditableText: [false],
-        isHidden: [false],
-        isViewFolder: [false],
-        children: this.formbuilder.array([]),
-      })
-    );
-  }
-
-  addChildrenFolder(index: number, folder: any) {
-    this.children.controls[index]?.get('isViewFolder')?.setValue(false);
-    folder.controls.children.push(
-      this.formbuilder.group({
-        name: ['', Validators.required],
-        type: ['folder'],
+        type: [type],
         isEditableText: [false],
         isHidden: [false],
         isViewFolder: [false],

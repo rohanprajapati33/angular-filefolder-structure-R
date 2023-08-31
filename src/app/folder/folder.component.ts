@@ -1,6 +1,5 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Entities, FolderType } from '../model/folder';
 
 @Component({
   selector: 'app-folder',
@@ -16,23 +15,29 @@ export class FolderComponent {
     return this.fileFolderForm.get('fileFolderFormArray') as FormArray;
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.fileFolderForm = this.formbuilder.group({
       fileFolderFormArray: this.formbuilder.array([]),
     });
   }
 
-  addFolder() {
+  /**
+   *This Function is Add root folder
+   *
+   * @return {*}  {void}
+   * @memberof FolderComponent
+   */
+  addFolder(type: string): void {
     if (this.fileFolderForm.invalid) {
       return;
     }
-    this.fileFolderFormArray.push(this.folderInput());
+    this.fileFolderFormArray.push(this.folderInput(type));
   }
 
-  folderInput() {
+  folderInput(type: string): FormGroup {
     return this.formbuilder.group({
       name: ['', Validators.required],
-      type: [''],
+      type: [type],
       isEditableText: [false],
       isHidden: [false],
       isViewFolder: [false],
@@ -40,66 +45,61 @@ export class FolderComponent {
     });
   }
 
-  save(folder: any) {
+  /**
+   *This Function is Save input name
+   *
+   * @param {*} folder
+   * @return {*}  {void}
+   * @memberof FolderComponent
+   */
+  save(folder: any): void {
     if (this.fileFolderForm.invalid) {
       return;
     }
     folder.get('isEditableText').setValue(true);
   }
 
-  cancel(index: number) {
+  cancel(index: number): void {
     this.fileFolderFormArray.removeAt(index);
   }
 
-  onMouseEnter(index: number) {
+  onMouseEnter(index: number): void {
     this.fileFolderFormArray.controls[index]?.get('isHidden')?.setValue(true);
   }
 
-  onMouseLeave(index: number) {
+  onMouseLeave(index: number): void {
     this.fileFolderFormArray.controls[index]?.get('isHidden')?.setValue(false);
   }
 
-  addFileFolder(index: number) {
+  /**
+   *This Function is show File_Folder button after click this
+   *
+   * @param {number} index
+   * @memberof FolderComponent
+   */
+  addFileFolder(index: number): void {
     this.fileFolderFormArray.controls[index]
       ?.get('isViewFolder')
       ?.setValue(true);
   }
 
-  deleteFolder(index: number) {
+  deleteFileFolder(index: number): void {
     this.fileFolderFormArray.removeAt(index);
   }
 
-  addChildrenFile(index: number, folder: any) {
+  /**
+   *  This Function is add children file and folder
+   *
+   * @param {number} index
+   * @param {*} folder
+   * @param {string} type
+   * @memberof FolderComponent
+   */
+  addChildrenFileFolder(index: number, folder: any, type: string): void {
     this.fileFolderFormArray.controls[index]
       ?.get('isViewFolder')
       ?.setValue(false);
 
-    folder.controls.children.push(
-      this.formbuilder.group({
-        name: ['', Validators.required],
-        type: ['file'],
-        isEditableText: [false],
-        isHidden: [false],
-        isViewFolder: [false],
-        children: this.formbuilder.array([]),
-      })
-    );
-  }
-
-  addChildrenFolder(index: number, folder: any) {
-    this.fileFolderFormArray.controls[index]
-      ?.get('isViewFolder')
-      ?.setValue(false);
-
-    folder.controls.children.push(
-      this.formbuilder.group({
-        name: ['', Validators.required],
-        type: ['folder'],
-        isEditableText: [false],
-        isHidden: [false],
-        isViewFolder: [false],
-        children: this.formbuilder.array([]),
-      })
-    );
+    folder.controls.children.push(this.folderInput(type));
   }
 }

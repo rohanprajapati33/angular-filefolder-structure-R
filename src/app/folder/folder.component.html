@@ -1,4 +1,6 @@
-<button class="add-folder" (click)="addFolder()">Add folder to root</button>
+<button class="add-folder" (click)="addFolder('folder')">
+  Add folder to root
+</button>
 <form [formGroup]="fileFolderForm">
   <ul formArrayName="fileFolderFormArray">
     <li
@@ -48,9 +50,9 @@
           >Folder Name is required</span
         >
 
-        <div *ngIf="folder.get('isHidden')?.value">
+        <div *ngIf="folder.get('isHidden')?.value" class="show-icon">
           <button (click)="addFileFolder(index)" class="plus">+</button>
-          <button (click)="deleteFolder(index)" class="minus">-</button>
+          <button (click)="deleteFileFolder(index)" class="minus">-</button>
         </div>
       </div>
 
@@ -58,8 +60,12 @@
         class="fileFolder tree-lines"
         *ngIf="folder.get('isViewFolder')?.value"
       >
-        <button (click)="addChildrenFile(index, folder)">File</button>
-        <button (click)="addChildrenFolder(index, folder)">Folder</button>
+        <button (click)="addChildrenFileFolder(index, folder, 'file')">
+          File
+        </button>
+        <button (click)="addChildrenFileFolder(index, folder, 'folder')">
+          Folder
+        </button>
       </div>
       <app-children [folderItem]="folder"></app-children>
     </li>

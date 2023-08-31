@@ -56,7 +56,7 @@
           >Folder Name is required</span
         >
 
-        <div *ngIf="folder.get('isHidden')?.value">
+        <div *ngIf="folder.get('isHidden')?.value" class="show-icon">
           <button
             *ngIf="folder.get('type')?.value === 'folder'"
             (click)="addFileFolder(index)"
@@ -64,19 +64,23 @@
           >
             +
           </button>
-          <button (click)="deleteFolder(index)" class="minus">-</button>
+          <button (click)="deleteFileFolder(index)" class="minus">-</button>
         </div>
       </div>
 
       <ul>
         <li class="tree-lines" *ngIf="folder.get('isViewFolder')?.value">
-          <button class="btn" (click)="addChildrenFile(index, folder)">
+          <button
+            class="btn"
+            (click)="addChildrenFileFolder(index, folder, 'file')"
+          >
             File
           </button>
-          <button (click)="addChildrenFolder(index, folder)">Folder</button>
+          <button (click)="addChildrenFileFolder(index, folder, 'folder')">
+            Folder
+          </button>
         </li>
       </ul>
-
       <app-children [folderItem]="folder"></app-children>
     </li>
   </ul>
